@@ -35,6 +35,10 @@ class ChangePasswordRequest(BaseModel):
     confirmed_new_password: str = Field(min_length=6)
 
 
+class PhoneNumberRequest(BaseModel):
+    phone_number: str = Field()
+
+
 @router.get("/", status_code=status.HTTP_200_OK)
 async def read_user(user: user_dependency, db: db_dependency):
     if user is None:
@@ -81,9 +85,9 @@ async def change_password(db: db_dependency,
 
 
 @router.put("/phone-number", status_code=status.HTTP_204_NO_CONTENT)
-async def change_phone_number(db: db_dependency,
-                          user: user_dependency,
-                          phone_number: str):
+async def phone_number(db: db_dependency,
+                        user: user_dependency,
+                        phone_request: PhoneNumberRequest):
     if user is None:
         raise HTTPException(status_code=401, detail='Authentication Failed')
 
@@ -94,7 +98,7 @@ async def change_phone_number(db: db_dependency,
     if user_model is None:
         raise HTTPException(status_code=404, detail='User not found.')
 
-    user_model.phone_number = phone_number
+    user_model.phone_number = phone_request.phone_number
 
     db.add(user_model)
     db.commit()
