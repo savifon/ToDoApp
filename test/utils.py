@@ -5,7 +5,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
 
 from database import Base
-from models import ToDos
+from models import ToDos  # ok importar os modelos depois de Base
 
 
 # Banco de teste (SQLite em memória)
