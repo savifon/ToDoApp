@@ -9,10 +9,10 @@ from pydantic import BaseModel
 from sqlalchemy.orm import Session
 from starlette import status
 from jose import jwt, JWTError
+from passlib.context import CryptContext
 
 from database import SessionLocal
 from models import Users
-from passlib.context import CryptContext
 
 load_dotenv()
 
